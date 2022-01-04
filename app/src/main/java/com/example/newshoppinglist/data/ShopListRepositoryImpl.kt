@@ -8,13 +8,13 @@ import kotlin.random.Random
 
 object ShopListRepositoryImpl : ShopListRepository {
 
-    private val shopList = sortedSetOf<ShopItem>({ p0, p1 -> p0.id.compareTo(p1.id) })
     private val shopListLD = MutableLiveData<List<ShopItem>>()
+    private val shopList = sortedSetOf<ShopItem>({ o1, o2 -> o1.id.compareTo(o2.id) })
 
     private var autoIncrementId = 0
 
     init {
-        for (i in 0 until 1000) {
+        for (i in 0 until 10) {
             val item = ShopItem("Name $i", i, Random.nextBoolean())
             addShopItem(item)
         }
@@ -25,6 +25,7 @@ object ShopListRepositoryImpl : ShopListRepository {
             shopItem.id = autoIncrementId++
         }
         shopList.add(shopItem)
+        updateList()
     }
 
     override fun deleteShopItem(shopItem: ShopItem) {
@@ -51,5 +52,4 @@ object ShopListRepositoryImpl : ShopListRepository {
     private fun updateList() {
         shopListLD.value = shopList.toList()
     }
-
 }

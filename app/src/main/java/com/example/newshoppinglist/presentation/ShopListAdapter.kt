@@ -29,17 +29,17 @@ class ShopListAdapter : ListAdapter<ShopItem, ShopItemViewHolder>(ShopItemDiffCa
         return ShopItemViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ShopItemViewHolder, position: Int) {
+    override fun onBindViewHolder(viewHolder: ShopItemViewHolder, position: Int) {
         val shopItem = getItem(position)
-        holder.view.setOnLongClickListener {
+        viewHolder.view.setOnLongClickListener {
             onShopItemLongClickListener?.invoke(shopItem)
             true
         }
-        holder.view.setOnClickListener {
+        viewHolder.view.setOnClickListener {
             onShopItemClickListener?.invoke(shopItem)
         }
-        holder.tvName.text = shopItem.name
-        holder.tvCount.text = shopItem.count.toString()
+        viewHolder.tvName.text = shopItem.name
+        viewHolder.tvCount.text = shopItem.count.toString()
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -52,6 +52,7 @@ class ShopListAdapter : ListAdapter<ShopItem, ShopItemViewHolder>(ShopItemDiffCa
     }
 
     companion object {
+
         const val VIEW_TYPE_ENABLED = 100
         const val VIEW_TYPE_DISABLED = 101
 

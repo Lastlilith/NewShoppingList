@@ -12,26 +12,26 @@ import com.example.newshoppinglist.domain.ShopItem
 class ShopItemViewModel : ViewModel() {
 
     private val repository = ShopListRepositoryImpl
+
     private val getShopItemUseCase = GetShopItemUseCase(repository)
     private val addShopItemUseCase = AddShopItemUseCase(repository)
     private val editShopItemUseCase = EditShopItemUseCase(repository)
 
-    val _errorInputName = MutableLiveData<Boolean>()
+    private val _errorInputName = MutableLiveData<Boolean>()
     val errorInputName: LiveData<Boolean>
         get() = _errorInputName
 
-    val _errorInputCount = MutableLiveData<Boolean>()
+    private val _errorInputCount = MutableLiveData<Boolean>()
     val errorInputCount: LiveData<Boolean>
-        get() = _errorInputName
+        get() = _errorInputCount
 
     private val _shopItem = MutableLiveData<ShopItem>()
     val shopItem: LiveData<ShopItem>
-    get() = _shopItem
+        get() = _shopItem
 
     private val _shouldCloseScreen = MutableLiveData<Unit>()
     val shouldCloseScreen: LiveData<Unit>
-    get() = _shouldCloseScreen
-
+        get() = _shouldCloseScreen
 
     fun getShopItem(shopItemId: Int) {
         val item = getShopItemUseCase.getShopItem(shopItemId)
@@ -43,11 +43,10 @@ class ShopItemViewModel : ViewModel() {
         val count = parseCount(inputCount)
         val fieldsValid = validateInput(name, count)
         if (fieldsValid) {
-            val shopItem = ShopItem(name, count, enabled = true)
+            val shopItem = ShopItem(name, count, true)
             addShopItemUseCase.addShopItem(shopItem)
             finishWork()
         }
-
     }
 
     fun editShopItem(inputName: String?, inputCount: String?) {
